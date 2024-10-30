@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "set NEXT_NO_TURBOPACK=true && next dev",
+    "dev": "set NEXT_NO_TURBOPACK=true NEXT_LINT=false && next dev",
     "build": "next build",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
     "start": "next start"
   },
   "dependencies": {
