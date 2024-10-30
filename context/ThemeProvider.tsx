@@ -7,9 +7,9 @@ interface ThemeContextType {
   setMode: (mode: string) => void;
 }
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<any | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }): JSX.Element {
+export function ThemeProvider({ children } : { children: any})  {
   const [mode, setMode] = useState<string>('light');
 
   const handleThemeChange = () => {
