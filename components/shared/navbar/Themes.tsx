@@ -9,7 +9,6 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-
 import { themes } from "@/constants";
 import Image from "next/image";
 
@@ -44,12 +43,12 @@ const Theme = () => {
               key={item.value}
               className="flex cursor-pointer items-center gap-4 px-2.5 py-2 focus:bg-light-800 dark:focus:bg-dark-400"
               onClick={() => {
-                setMode(item.value);
-
-                if (item.value !== "system") {
+                if (item.value === 'light' || item.value === 'dark') {
+                  setMode(item.value as 'light' | 'dark'); // Type assertion here
                   localStorage.theme = item.value;
                 } else {
-                  localStorage.removeItem("theme");
+                  localStorage.removeItem("theme"); // Handle "system"
+                  // Handle the system theme logic here if needed
                 }
               }}
             >
