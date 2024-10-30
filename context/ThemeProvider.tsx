@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 interface ThemeContextType {
   mode: string;
-  setMode: (mode: string) => void;
+  setMode: (mode: string) => void; // Type assertion here
 }
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
