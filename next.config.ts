@@ -1,3 +1,5 @@
+import { hostname } from "os";
+
 // next.config.ts
 const nextConfig = {
   eslint: {
@@ -10,6 +12,20 @@ const nextConfig = {
     mdxRs: true,
   },
   serverExternalPackages: ['mongoose'], // moved from `experimental`
+
+  images:{
+    remotePatterns : [
+      {
+        protocol: 'https:',
+        hostname: '*',
+      },
+      {
+        protocol: 'http:',
+        hostname: '*',
+      }
+    ]
+  }
+
 };
 
 export default nextConfig;

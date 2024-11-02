@@ -82,7 +82,8 @@ const Questions = ({mongoUserId} : props) => {
             title: values.title,
             content: values.explanation,
             tags: values.tags,
-            author: JSON.parse(mongoUserId)
+            author: JSON.parse(mongoUserId),
+            path: pathname
            });
 
            router.push('/');

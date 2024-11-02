@@ -6,18 +6,18 @@ import { getUserById } from '@/lib/actions/user.action';
 import { useEffect, useState } from 'react';
 const Page = async () => {
   
-  // const [userId, setUserId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  // // Using useEffect to fetch userId asynchronously
-  // useEffect(() => {
-  //   const fetchAuth = async () => {
-  //     const authData = await auth();
-  //     setUserId(authData.userId);
-  //   };
-  //   fetchAuth();
-  // }, []);
+  // Using useEffect to fetch userId asynchronously
+  useEffect(() => {
+    const fetchAuth = async () => {
+      const authData = await auth();
+      setUserId(authData.userId);
+    };
+    fetchAuth();
+  }, []);
 
-  const userId = "abc123xyz"; // Corrected userId
+
   if (!userId) {
     redirect('/sign-in');
   }
