@@ -1,24 +1,14 @@
-
-
 import React from 'react';
 import Questions from '@/components/forms/questions';
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import { getUserById } from '@/lib/actions/user.action'; 
-import { useEffect, useState } from 'react';
+
 const Page = async () => {
   
-  const [userId, setUserId] = useState<string | null>(null);
+ 
 
-  // Using useEffect to fetch userId asynchronously
-  useEffect(() => {
-    const fetchAuth = async () => {
-      const authData = await auth();
-      setUserId(authData.userId);
-    };
-    fetchAuth();
-  }, []);
-
+  const {userId} = await auth();
 
   if (!userId) {
     redirect('/sign-in');
