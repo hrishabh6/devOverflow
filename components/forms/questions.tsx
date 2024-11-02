@@ -18,19 +18,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
-
+import { questionSchema } from '@/lib/validation';
+import { createQuestion } from '@/lib/actions/question.action';
+import { useRouter, usePathname } from 'next/navigation';
 const type: any = "create"
 
-const questionSchema = z.object({
-    title: z.string().min(5, "Title must be at least 5 characters"),
-    explanation: z.string().min(1, "Explanation is required"),
-    tags: z.array(z.string()).min(1, "Please add at least one tag"),
-});
+interface props {
+    mongoUserId: string;
+}
 
-const Questions = () => {
+
+const Questions = ({mongoUserId} : props) => {
     const editorRef = useRef(null);
     const [submitting, setSubmitting] = useState(false);
-
+    const router = useRouter();
+    const pathname = usePathname();
 
     const form = useForm<z.infer<typeof questionSchema>>({
         resolver: zodResolver(questionSchema),
@@ -73,11 +75,18 @@ const Questions = () => {
     }
 
 
-    function onSubmit(values: z.infer<typeof questionSchema>) {
+    async function onSubmit(values: z.infer<typeof questionSchema>) {
         setSubmitting(true);
         try {
-           //async call to call api -> create a question -> contain all form data
-           //navigate to home page 
+           await createQuestion({
+            title: values.title,
+            content: values.explanation,
+            tags: values.tags,
+            author: JSON.parse(mongoUserId)
+           });
+
+           router.push('/');
+
         } catch (error) {
             
         } finally {
@@ -127,6 +136,8 @@ const Questions = () => {
                                         //@ts-ignore
                                         editorRef.current = editor;
                                     }}
+                                    onBlur={field.onBlur}
+                                    onEditorChange={(content) => field.onChange(content)}
                                     initialValue=""
                                     init={{
                                         height: 350,
@@ -141,9 +152,7 @@ const Questions = () => {
                                             'alignright alignjustify | bullist numlist',
                                         content_style: 'body { font-family:Inter; font-size:16px }'
                                     }}
-                                    onEditorChange={(content) => {
-                                        form.setValue("explanation", content);
-                                    }}
+                                    
                                 />
                             </FormControl>
                             <FormDescription className="body-regular mt-2.5 text-light-500">
@@ -153,7 +162,7 @@ const Questions = () => {
                         </FormItem>
                     )}
                 />
-
+                
                 {/* Tags Field */}
                 <FormField
                     control={form.control}

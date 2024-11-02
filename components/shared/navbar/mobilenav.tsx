@@ -50,7 +50,7 @@ const MobileNav = () => {
         <div>
             <Sheet>
                 <SheetTrigger asChild>
-                    <Image src="/assets/icons/hamburger.svg" width={36} height={36} alt='Hamburger icon' className='invert sm:hidden' />
+                    <Image src="/assets/icons/hamburger.svg" width={36} height={36} alt='Hamburger icon' className='invert dark:invert-0 sm:hidden overflow-auto' />
                 </SheetTrigger>
                 <SheetContent side={"left"} className='background-light900_dark200 border-none'>
                     <VisuallyHidden.Root>
@@ -60,7 +60,7 @@ const MobileNav = () => {
                     </VisuallyHidden.Root>
                     <Link href='/' className='flex items-center gap-1'>
                         <Image src="/assets/images/site-logo.svg" alt="DevFlow" width={40} height={40} />
-                        <p className='h2-bold text-dark-100_light900 font-spaceGrotesk'>Dev<span className='text-primary-500'>Overflow</span></p>
+                        <p className="h2-bold text-dark100_light900 font-spaceGrotesk">Dev <span className="text-primary-500">Overflow</span></p>
                     </Link>
                     <div>
                         <SheetClose asChild>

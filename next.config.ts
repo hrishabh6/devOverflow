@@ -6,6 +6,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true, 
   },
+  experimental: {
+    mdxRs: true,
+  },
+  serverExternalPackages: ['mongoose'], // moved from `experimental`
 };
 
 export default nextConfig;
