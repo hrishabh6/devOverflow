@@ -16,11 +16,11 @@ const nextConfig = {
   images:{
     remotePatterns : [
       {
-        protocol: 'https:',
+        protocol: 'https', // Removed the colon
         hostname: '*',
       },
       {
-        protocol: 'http:',
+        protocol: 'http', // Removed the colon
         hostname: '*',
       }
     ]
