@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import Questions from '@/components/forms/questions';
 import { redirect } from 'next/navigation';
