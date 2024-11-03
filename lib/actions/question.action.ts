@@ -29,7 +29,7 @@ export async function createQuestion(param : CreateQuestionParams){
             content,
             author
         })
-
+        
         const tagDocument = []
 
         for (const tag of tags) {
