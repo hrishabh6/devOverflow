@@ -5,9 +5,9 @@ import { redirect } from 'next/navigation'
 import { getUserById } from '@/lib/actions/user.action'
 const Page = async () => {
 
-  // const {userId} = await auth()
+  const {userId} = await auth()
 
-  const userId = '12345abcde'
+
 
   if(!userId) {
     redirect('/sign-in')
