@@ -10,7 +10,21 @@ const nextConfig = {
     serverActions : true,
     mdxRs : true,
   },
-  serverExternalPackages: ['mongoose']
+  serverExternalPackages: ['mongoose'],
+
+  images: {
+    remotePatterns : [
+    {
+      protocol : 'https',
+      hostname : '*'
+    },
+    {
+      protocol : 'http',
+      hostname : '*'
+    }
+    ]
+  }
+
 };
 
 export default nextConfig;
