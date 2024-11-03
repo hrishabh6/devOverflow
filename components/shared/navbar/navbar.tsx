@@ -26,6 +26,7 @@ const navbar = () => {
                 <Theme />
                 <SignedIn>
                     <UserButton
+                        
                         appearance={{
                             elements: {
                                 avatarBox: 'md:h-10 md:w-10'

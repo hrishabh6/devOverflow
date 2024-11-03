@@ -33,6 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
     <ClerkProvider
+    afterSignOutUrl="/"
     publishableKey={process.env.CLERK_PUBLISHABLE_KEY}
       appearance={{
         elements: {
