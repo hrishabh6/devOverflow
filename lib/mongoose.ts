@@ -15,7 +15,7 @@ export const connectToDatabase = async () => {
 
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
-            dbName: '   '
+            dbName: 'devoverflow2'
         })
         isConnected = true
         console.log("Connection to database stablished");
