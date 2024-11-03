@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
+import { createQuestion } from '@/lib/actions/question.action';
+import { useRouter, usePathname } from 'next/navigation';
 
 const type: any = "create"
 
@@ -27,10 +29,16 @@ const questionSchema = z.object({
     tags: z.array(z.string()).min(1, "Please add at least one tag"),
 });
 
-const Questions = () => {
+interface props {
+    mongoUserId: string;
+}
+
+const Questions = ({ mongoUserId }: props) => {
     const editorRef = useRef(null);
     const [submitting, setSubmitting] = useState(false);
 
+    const router = useRouter();
+    const pathname = usePathname()
 
     const form = useForm<z.infer<typeof questionSchema>>({
         resolver: zodResolver(questionSchema),
@@ -73,13 +81,21 @@ const Questions = () => {
     }
 
 
-    function onSubmit(values: z.infer<typeof questionSchema>) {
+    async function onSubmit(values: z.infer<typeof questionSchema>) {
         setSubmitting(true);
         try {
-           //async call to call api -> create a question -> contain all form data
-           //navigate to home page 
+            await createQuestion({
+                title: values.title,
+                content: values.explanation,
+                tags: values.tags,
+                author: JSON.parse(mongoUserId),
+                path: pathname,
+            })
+
+            router.push('/ ')
+
         } catch (error) {
-            
+
         } finally {
             setSubmitting(false);
         }
@@ -128,6 +144,8 @@ const Questions = () => {
                                         editorRef.current = editor;
                                     }}
                                     initialValue=""
+                                    onBlur={field.onBlur}
+                                    onEditorChange={(content) => field.onChange(content)}
                                     init={{
                                         height: 350,
                                         menubar: false,
@@ -140,9 +158,6 @@ const Questions = () => {
                                             'bold italic forecolor | alignleft aligncenter ' +
                                             'alignright alignjustify | bullist numlist',
                                         content_style: 'body { font-family:Inter; font-size:16px }'
-                                    }}
-                                    onEditorChange={(content) => {
-                                        form.setValue("explanation", content);
                                     }}
                                 />
                             </FormControl>
