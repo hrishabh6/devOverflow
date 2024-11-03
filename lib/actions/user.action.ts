@@ -25,10 +25,12 @@ export async function getUserById(params : any ) {
 export async function createUser(params : CreateUserParams){
     try {
         connectToDatabase();
+        console.log("creating a user")
         const newUser = await User.create(params)
         return newUser;
     } catch (error) {
-        
+        throw error
+        console.error("user can not be created")
     }
 }
 export async function updateUser(params : UpdateUserParams){
