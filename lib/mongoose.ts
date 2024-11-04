@@ -1,4 +1,3 @@
-import { log } from 'console';
 import mongoose from 'mongoose'
 
 let isConnected: boolean = false;
@@ -15,7 +14,7 @@ export const connectToDatabase = async () => {
 
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
-            dbName: 'devoverflow2'
+            dbName: 'stackOF'
         })
         isConnected = true
         console.log("Connection to database stablished");
