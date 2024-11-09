@@ -4,14 +4,14 @@ let isConnected: boolean = false;
 
 export const connectToDatabase = async () => {
   mongoose.set("strictQuery", true);
-  if (!process.env.MONGODB_URL) {
+  if (!process.env.MONGODB_URI) {
     return console.log("MISSING MONGODB_URL");
   }
   if (isConnected) {
     return;
   }
   try {
-    await mongoose.connect(process.env.MONGODB_URL, { dbName: "devoverflow2" });
+    await mongoose.connect(process.env.MONGODB_URI, { dbName: "devoverflow2" });
     isConnected = true;
     console.log("MongoDB is connected");
   } catch (error) {
