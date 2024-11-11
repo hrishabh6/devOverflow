@@ -11,7 +11,7 @@ interface props extends SearchParamsProps {
 }
 
 
-const AnswersTab = async ({searchProps, userId, clerkId} : props) => {
+const AnswersTab = async ({userId, clerkId} : props) => {
     const result = await getUserAnswers({
         userId,
         page: 1,
