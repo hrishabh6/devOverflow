@@ -24,6 +24,7 @@ const Metric = ({
   const MetricContent = useMemo(
     () => (
       <>
+        <p className={`${textStyles} flex items-center gap-1`}>
         <Image
           src={imgUrl}
           alt={alt}
@@ -31,7 +32,6 @@ const Metric = ({
           height={16}
           className={`object-contain ${href ? "rounded-full" : ""}`}
         />
-        <p className={`${textStyles} flex-center gap-1`}>
           <span className="leading-3">{value}</span>
           <span
             className={`small-regular line-clamp-1 leading-3 ${

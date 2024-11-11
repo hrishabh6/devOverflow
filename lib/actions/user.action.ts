@@ -161,66 +161,102 @@ export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
 export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
-
-    const { clerkId, searchQuery, filter, page = 1, pageSize = 20 } = params;
-
-    const skipAmount = (page - 1) * pageSize;
+    
+    const { clerkId, searchQuery } = params;
 
     const query: FilterQuery<typeof Question> = searchQuery
-      ? { title: { $regex: new RegExp(searchQuery, "i") } }
-      : {};
+    ? {title : {$regex: new RegExp(searchQuery, "i") }} : {}
 
-    let sortOptions = {};
-
-    switch (filter) {
-      case "most_recent":
-        sortOptions = { createdAt: -1 };
-        break;
-      case "oldest":
-        sortOptions = { createdAt: 1 };
-        break;
-      case "most_voted":
-        sortOptions = { upvotes: -1 };
-        break;
-      case "most_viewed":
-        sortOptions = { views: -1 };
-        break;
-      case "most_answered":
-        sortOptions = { answers: -1 };
-        break;
-
-      default:
-        break;
-    }
-
-    const user = await User.findOne({ clerkId }).populate({
-      path: "saved",
+    const user = await User.findOne({clerkId}).populate({
+      path: 'saved',
       match: query,
-      options: {
-        sort: sortOptions,
-        skip: skipAmount,
-        limit: pageSize + 1,
+      options : {
+        sort : {createdAt: -1},
       },
       populate: [
-        { path: "tags", model: Tag, select: "_id name" },
-        { path: "author", model: User, select: "_id clerkId name picture" },
-      ],
-    });
+        {path : 'tags', model: Tag, select: '_id name'},
+        {path : 'author', model: User, select: '_id clerkId name picture'}
+      ]   
+    })
 
-    const isNext = user.saved.length > pageSize;
-
-    if (!user) {
+    if(!user){
       throw new Error("User not found");
     }
 
-    const savedQuestions = user.saved;
+    const savedQuestion = user.saved;
 
-    return { questions: savedQuestions, isNext };
+    return {questions: savedQuestion};
+
+
   } catch (error) {
     console.log(error);
     throw error;
+    
   }
 }
+// export async function getSavedQuestions(params: GetSavedQuestionsParams) {
+//   try {
+//     connectToDatabase();
+
+//     const { clerkId, searchQuery, filter, page = 1, pageSize = 20 } = params;
+
+//     const skipAmount = (page - 1) * pageSize;
+
+//     const query: FilterQuery<typeof Question> = searchQuery
+//       ? { title: { $regex: new RegExp(searchQuery, "i") } }
+//       : {};
+
+//     let sortOptions = {};
+
+//     switch (filter) {
+//       case "most_recent":
+//         sortOptions = { createdAt: -1 };
+//         break;
+//       case "oldest":
+//         sortOptions = { createdAt: 1 };
+//         break;
+//       case "most_voted":
+//         sortOptions = { upvotes: -1 };
+//         break;
+//       case "most_viewed":
+//         sortOptions = { views: -1 };
+//         break;
+//       case "most_answered":
+//         sortOptions = { answers: -1 };
+//         break;
+
+//       default:
+//         break;
+//     }
+
+//     const user = await User.findOne({ clerkId }).populate({
+//       path: "saved",
+//       match: query,
+//       options: {
+//         sort: sortOptions,
+//         skip: skipAmount,
+//         limit: pageSize + 1,
+//       },
+//       populate: [
+//         { path: "tags", model: Tag, select: "_id name" },
+//         { path: "author", model: User, select: "_id clerkId name picture" },
+//       ],
+//     });
+
+//     const isNext = user.saved.length > pageSize;
+
+//     if (!user) {
+//       throw new Error("User not found");
+//     }
+
+//     const savedQuestions = user.saved;
+
+//     return { questions: savedQuestions, isNext };
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// }
 
 export async function getUserInfo(params: GetUserByIdParams) {
   try {

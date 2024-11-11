@@ -17,6 +17,7 @@ interface QuestionProps {
   views: IQuestion["views"];
   answers: IAnswer[];
   createdAt: IQuestion["createdAt"];
+  clerkId?: string;
 }
 
 const QuestionCard = ({
