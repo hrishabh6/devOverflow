@@ -2,7 +2,7 @@
 import Filter from "@/components/shared/Filter";
 import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
-import { UserFilters } from "@/constants/filters";
+import { TagFilters } from "@/constants/filters";
 import { SearchParamsProps } from "@/types";
 import type { Metadata } from "next";
 import NoResult from "@/components/shared/NoResult";
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
   return (
@@ -30,7 +31,7 @@ const Community = async ({ searchParams }: SearchParamsProps) => {
           otherClasses="flex-1"
         />
         <Filter
-          filters={UserFilters}
+          filters={TagFilters}
           otherClasses="min-h-[56px] sm:min-w-[170px]"
         />
       </div>
