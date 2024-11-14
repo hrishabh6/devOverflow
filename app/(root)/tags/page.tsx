@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const Community = async ({ searchParams }: SearchParamsProps) => {
   const result = await getAllTags({
-    
+    searchQuery: searchParams.q,
   });
 
   return (

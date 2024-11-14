@@ -6,6 +6,8 @@ import { IQuestion } from "@/database/question.model";
 import { ITag } from "@/database/tag.model";
 import { IUser } from "@/database/user.model";
 import { IAnswer } from "@/database/answer.model";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteActions from "../shared/EditDeleteActions";
 
 interface QuestionProps {
   _id: IQuestion["_id"];
@@ -17,10 +19,11 @@ interface QuestionProps {
   views: IQuestion["views"];
   answers: IAnswer[];
   createdAt: IQuestion["createdAt"];
-  clerkId?: string;
+  clerkId?: string | null;
 }
 
 const QuestionCard = ({
+  clerkId,
   _id,
   title,
   tags,
@@ -31,6 +34,9 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QuestionProps) => {
+
+  const showActionButtons = clerkId && clerkId === author.clerkId;
+  
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -44,7 +50,15 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
-        {/* If signed in add and edit actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteActions
+              type="Question"
+              itemId={JSON.stringify(_id)}
+            />
+          )}
+
+        </SignedIn>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
@@ -58,7 +72,7 @@ const QuestionCard = ({
             alt="User"
             value={author.name}
             title={` • asked ${getTimestamp(createdAt)}`}
-            href={`/profile/${author._id}`}
+            href={`/profile/${author.clerkId}`}
             isAuthor
             textStyles="body-medium text-dark400_light700"
           />

@@ -39,7 +39,7 @@ export function Question({ type, mongoUserId, questionDetails }: Props) {
 
   const parsedQuestionDetails =
     questionDetails && JSON.parse(questionDetails || "");
-
+    
   const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name);
 
   // 1. Define your form.
@@ -182,7 +182,7 @@ export function Question({ type, mongoUserId, questionDetails }: Props) {
                   }}
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
-                  initialValue=""
+                  initialValue={parsedQuestionDetails?.content ?? ""}
                   init={{
                     height: 350,
                     menubar: false,
@@ -232,6 +232,7 @@ export function Question({ type, mongoUserId, questionDetails }: Props) {
               <FormControl className="mt-3.5">
                 <>
                   <Input
+                    disabled={type === "Edit"}
                     className="no-focus paragraph-regular background-light800_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                     placeholder="Add tags..."
                     onKeyDown={(e) => handleInputKeyDown(e, field)}
@@ -242,15 +243,15 @@ export function Question({ type, mongoUserId, questionDetails }: Props) {
                         <Badge
                           key={tag}
                           className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
-                          onClick={() => handleTagRemove(tag, field)}>
+                          onClick={() => type !== "Edit" ? handleTagRemove(tag, field) : () => {}}>
                           {tag}
-                          <Image
+                          { type !== "Edit" && <Image
                             src="/assets/icons/close.svg"
                             alt="close icon"
                             width={12}
                             height={12}
                             className="cursor-pointer object-contain invert-0 dark:invert"
-                          />
+                          />}
                         </Badge>
                       ))}
                     </div>

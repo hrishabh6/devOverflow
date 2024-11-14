@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import { SignedIn } from "@clerk/nextjs";
+import EditDeleteActions from "../shared/EditDeleteActions";
 
 interface Props {
   clerkId?: string | null;
@@ -28,9 +30,10 @@ const AnswerCard = ({
   upvotes,
   createdAt,
 }: Props) => {
+  const showActionButtons = clerkId && clerkId === author.clerkId;
   
-
   return (
+
     <div className="card-wrapper rounded-[10px] px-11 py-9">
       <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
         <div>
@@ -43,7 +46,15 @@ const AnswerCard = ({
             </h3>
           </Link>
         </div>
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteActions
+              type="Answer"
+              itemId={JSON.stringify(_id)}
+            />
+          )}
 
+        </SignedIn> 
 
       </div>
 

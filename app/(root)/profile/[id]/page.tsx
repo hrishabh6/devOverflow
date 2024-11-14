@@ -53,6 +53,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
                 title={`Joined ${getJoinedDate(userInfo.user.joinedAt)}`}
               />
 
+            </div>
               {userInfo.user.bio && (
                 <>
                   <p className="paragraph-regular text-dark400_light800 mt-8">
@@ -60,7 +61,6 @@ const Page = async ({ params, searchParams }: URLProps) => {
                   </p>
                 </>
               )}
-            </div>
           </div>
         </div>
 

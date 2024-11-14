@@ -29,7 +29,7 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   }
 }
 
-export async function getAllTags(params: GetAllTagsParams) {
+export async function  getAllTags(params: GetAllTagsParams) {
   try {
     connectToDatabase();
 
@@ -84,6 +84,8 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
 
     const { tagId, page = 1, pageSize = 10, searchQuery } = params;
     const skipAmount = (page - 1) * pageSize;
+
+    
 
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
 
