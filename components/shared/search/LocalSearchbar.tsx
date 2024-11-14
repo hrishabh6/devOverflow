@@ -26,7 +26,7 @@ const LocalSearchbar = ({
   const searchParams = useSearchParams();
 
   const query = searchParams.get("q");
-  console.log(query);
+  
   const [search, setSearch] = useState(query || "");
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const LocalSearchbar = ({
         });
         router.push(newUrl, { scroll: false });
       } else {
-        console.log(route, pathname);
+        
         if (pathname === route) {
           const newUrl = removeKeysFromQuery({
             params: searchParams.toString(),
