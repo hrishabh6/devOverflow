@@ -1,3 +1,4 @@
+// constant files
 import { IThemes, SidebarLink } from "@/types";
 
 export const themes: IThemes[] = [

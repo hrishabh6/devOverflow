@@ -1,5 +1,5 @@
 "use client";
-
+// dark and light theme
 import { THEME_STORAGE_KEY } from "@/constants";
 import { ThemeName } from "@/types";
 import {

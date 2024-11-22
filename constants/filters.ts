@@ -1,3 +1,4 @@
+// constant files
 import { IFilterOptions } from "@/types";
 
 export const AnswerFilters: IFilterOptions[] = [

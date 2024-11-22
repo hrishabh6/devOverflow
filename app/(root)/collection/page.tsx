@@ -1,6 +1,7 @@
 import QuestionCard from "@/components/cards/QuestionCard";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { QuestionFilters } from "@/constants/filters";
 import { getSavedQuestions } from "@/lib/actions/user.action";
@@ -13,11 +14,11 @@ export default async function Home({searchParams} : SearchParamsProps) {
     const {userId} = auth()
     if(!userId) return null
 
-
-  const { questions } = await getSavedQuestions({
+  const result = await getSavedQuestions({
         clerkId : userId,
         searchQuery: searchParams.q,
         filter: searchParams.filter,
+        page: searchParams.page ? +searchParams.page : 1,
   });
   return (
     <>
@@ -41,8 +42,8 @@ export default async function Home({searchParams} : SearchParamsProps) {
       </div>
      
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question : any) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question : any) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -59,13 +60,18 @@ export default async function Home({searchParams} : SearchParamsProps) {
         ) : (
           <NoResult
             title="There's no question to show"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
-            discussion. our query could be the next big thing others learn from. Get
-            involved! 💡"
+            description="Looks like you haven't saved any questions yet. Save a question to see it here."
             link="/ask-question"
             linkTitle="Ask a Question"
           />
         )}
+      </div>
+      <div className="mt-10">
+        
+      <Pagination
+        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        isNext = {result.isNext}
+      />
       </div>
     </>
   );

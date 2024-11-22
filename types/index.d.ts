@@ -14,6 +14,7 @@ export interface SidebarLink {
   label: string;
 }
 
+
 export interface Job {
   id?: string;
   employer_name?: string;

@@ -1,36 +1,42 @@
-import { getUserAnswers } from '@/lib/actions/user.action';
-import { SearchParamsProps } from '@/types'
-import React from 'react'
+import { getUserAnswers } from "@/lib/actions/user.action";
+import { SearchParamsProps } from "@/types";
+import React from "react";
 
-import AnswerCard from '../cards/AnswerCard';
-
+import AnswerCard from "../cards/AnswerCard";
+import Pagination from "./Pagination";
 
 interface props extends SearchParamsProps {
-    userId: string;
-    clerkId?: string | null;
+  userId: string;
+  clerkId?: string | null;
 }
 
-
-const AnswersTab = async ({userId, clerkId} : props) => {
-    const result = await getUserAnswers({
-        userId,
-        page: 1,
-    })
+const AnswersTab = async ({ searchParams, userId, clerkId }: props) => {
+  const result = await getUserAnswers({
+    userId,
+    page: searchParams.page ? +searchParams.page : 1,
+  });
+  
   return (
     <>
-        {result?.answers.map((answers) => (
+      {result?.answers.map((answers) => (
         <AnswerCard
-        key={answers._id}
-        _id={answers._id}
-        clerkId={clerkId}
-        question={answers.question}
-        author={answers.author}
-        upvotes={answers.upvotes}
-        createdAt={answers.createdAt}
-      />
+          key={answers._id}
+          _id={answers._id}
+          clerkId={clerkId}
+          question={answers.question}
+          author={answers.author}
+          upvotes={answers.upvotes.length}
+          createdAt={answers.createdAt}
+        />
       ))}
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNextAnswer}
+        />
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default AnswersTab
+export default AnswersTab;
