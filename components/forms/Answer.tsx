@@ -18,7 +18,8 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
-
+import axios from "axios"
+import { toast } from "@/hooks/use-toast";
 interface Props {
   question: string;
   questionId: string;
@@ -53,6 +54,10 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         const editor = editorRef.current as any;
         editor.setContent("");
       }
+      return toast({
+        title: `Answer submitted successfully`,
+        variant :  "default",
+      })
     } catch (error) {
       console.log(error);
     } finally {
@@ -64,27 +69,40 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     if (!authorId) return;
     setSetIsSubmittingAI(true);
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/chatgpt`,
-        {
-          method: "POST",
-          body: JSON.stringify({ question }),
-        }
-      );
-      const aiAnswer = await response.json();
-      // Convert plain text to HTML format
-      const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
+      const response = await axios({
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
+        method: "post",
+        data: {
+          contents: [
+            {
+              role: "model",
+              parts: [{ text: "You are a knowledgeable assistant providing concise and helpful answers." }],
+            },
+            {
+              role: "user",
+              parts: [{ text: question }],
+            },
+          ],
+          generationConfig: {
+            maxOutputTokens: 1000,
+            temperature: 1,
+          },
+        },
+      });
+      console.log(response)
+      const aiAnswer = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+      const formattedAnswer = aiAnswer.replace(/\n/g, "<br />");
       if (editorRef.current) {
         const editor = editorRef.current as any;
         editor.setContent(formattedAnswer);
       }
-      // Toast...
     } catch (error) {
-      console.log(error);
+      console.error("Error generating AI answer:", error);
     } finally {
       setSetIsSubmittingAI(false);
     }
   };
+  
 
   const isDarkMode = useMemo(() => mode === "dark", [mode]);
 
@@ -96,6 +114,9 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     );
   }
 
+  
+
+
   return (
     <div>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
@@ -105,7 +126,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
 
         <Button
           className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
-          onClick={generateAIAnswer}>
+          onClick={generateAIAnswer}
+        >
           {isSubmittingAI ? (
             <>Generating...</>
           ) : (
@@ -126,7 +148,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
       <Form {...form}>
         <form
           className="mt-6 flex w-full flex-col gap-10"
-          onSubmit={form.handleSubmit(handleCreateAnswer)}>
+          onSubmit={form.handleSubmit(handleCreateAnswer)}
+        >
           <FormField
             control={form.control}
             name="answer"
@@ -181,7 +204,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
             <Button
               type="submit"
               className="primary-gradient w-fit text-white"
-              disabled={isSubmitting}>
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </div>

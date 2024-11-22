@@ -5,6 +5,21 @@ import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { getQuestionsByTagId } from "@/lib/actions/tag.action";
 import { URLProps } from "@/types";
 import React from "react";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: URLProps): Promise<Metadata> {
+  const result = await getQuestionsByTagId({
+    tagId: params.id,
+    pageSize: 1,
+  });
+  return {
+    title: `Questions with Tag '${result.tagTitle}' | Dev Overflow`,
+    description: `View questions with tag '${result.tagTitle}' on Dev Overflow - A community-driven platform for asking and answering programming questions. Get help, share knowledge and collaborate with developers from around the world. Explore topics in web developments, mobile app development, algorithms, data structures and more...`,
+  };
+}
 
 const page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionsByTagId({

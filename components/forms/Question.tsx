@@ -23,6 +23,7 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { createQuestion, editQuestion } from "@/lib/actions/question.action";
+import { toast } from "@/hooks/use-toast";
 
 interface Props {
   type?: string;
@@ -52,7 +53,7 @@ export function Question({ type, mongoUserId, questionDetails }: Props) {
     },
   });
 
-  // 2. Define a submit handler.
+
   async function onSubmit(values: z.infer<typeof QuestionSchema>) {
     setIsSubmitting(true);
     try {
@@ -64,6 +65,10 @@ export function Question({ type, mongoUserId, questionDetails }: Props) {
           path: pathname,
         });
         router.push(`/question/${parsedQuestionDetails._id}`);
+        return toast({
+          title: `Question Edited Successfully`,
+          variant :  "default",
+        })
       } else {
         await createQuestion({
           title: values.title,
@@ -73,8 +78,17 @@ export function Question({ type, mongoUserId, questionDetails }: Props) {
           path: pathname,
         });
         router.push("/");
+        return toast({
+          title: `Question Uploaded Successfully`,
+          variant :  "default",
+        })
       }
     } catch (error) {
+      return toast({
+        title: `Failed to Submit question`,
+        variant :  "default",
+      })
+      
     } finally {
       setIsSubmitting(false);
     }

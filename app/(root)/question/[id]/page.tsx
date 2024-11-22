@@ -11,6 +11,14 @@ import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Question | Dev Overflow",
+  description:
+    "View the question details and corresponding answers on Dev Overflow - A community-driven platform for asking and answering programming questions. Get help, share knowledge and collaborate with developers from around the world. Explore topics in web developments, mobile app development, algorithms, data structures and more...",
+};
+
 
 const Page = async ({ params, searchParams }: any) => {
   const { userId: clerkId } = auth();

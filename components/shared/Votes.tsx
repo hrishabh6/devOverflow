@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@/hooks/use-toast";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 import { viewQuestion } from "@/lib/actions/interaction.action";
 import {
@@ -37,16 +38,17 @@ const Votes = ({
   const pathname = usePathname();
 
   const handleSave = async () => {
-    if (!userId) {
-      return
-    }
-   await toggleSaveQuestion({
+    await toggleSaveQuestion({
       userId: JSON.parse(userId),
       questionId: JSON.parse(itemId),
       path: pathname,
     });
-
-    ;
+    
+    return toast({
+      title: `Question ${!hasSaved ? "saved in" : "removed from"} your collection `,
+      variant : !hasSaved ? "default" : "destructive",
+    })
+    
   } ;
 
   const handleVote = 
@@ -74,7 +76,10 @@ const Votes = ({
           });
         }
 
-        ;
+        return toast({
+          title: `Upvote ${!hasupVoted ? "successful" : "removed"}`,
+          variant : !hasupVoted ? "default" : "destructive",
+        })
       }
 
       if (action === "downvote") {
@@ -96,7 +101,10 @@ const Votes = ({
           });
         }
 
-        ;
+        return toast({
+          title: `Downvote ${!hasdownVoted ? "successful" : "removed"}`,
+          variant : !hasupVoted ? "default" : "destructive",
+        })
       }
     }
    

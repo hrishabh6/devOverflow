@@ -18,6 +18,7 @@ import { Textarea } from "../ui/textarea";
 import { ProfileSchema } from "@/lib/validations";
 import { usePathname, useRouter } from "next/navigation";
 import { updateUser } from "@/lib/actions/user.action";
+import { toast } from "@/hooks/use-toast";
 
 
 
@@ -59,6 +60,10 @@ const Profile = ({ clerkId, user }: props) => {
             path: pathname
         })
         Router.back();
+        return toast({
+          title: "details saved successfully",
+          variant : "default",
+        })
     } catch (error) {
       console.error(error);
     } finally {
@@ -77,14 +82,14 @@ const Profile = ({ clerkId, user }: props) => {
           name="name"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Name <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   placeholder="Your Name"
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 ,min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 ,min-h-[56px] border"
                 />
               </FormControl>
 
@@ -97,14 +102,14 @@ const Profile = ({ clerkId, user }: props) => {
           name="username"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Username <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   placeholder="Your username"
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 ,min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 ,min-h-[56px] border"
                 />
               </FormControl>
 
@@ -117,13 +122,13 @@ const Profile = ({ clerkId, user }: props) => {
           name="portfolioWebsite"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>Portfolio Link</FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">Portfolio Link</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="url"
                   placeholder="Your Portfolio URL"
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 ,min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 ,min-h-[56px] border"
                 />
               </FormControl>
 
@@ -136,12 +141,12 @@ const Profile = ({ clerkId, user }: props) => {
           name="location"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>Location</FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">Location</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   placeholder="Where are you from"
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 ,min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 ,min-h-[56px] border"
                 />
               </FormControl>
 
@@ -154,12 +159,12 @@ const Profile = ({ clerkId, user }: props) => {
           name="bio"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
-              <FormLabel>Bio</FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">Bio</FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
                   placeholder="About you"
-                  className="no-focus paragraph-regular light-border-2 background-light700_dark300 text-dark300_light700 ,min-h-[56px] border"
+                  className="no-focus paragraph-regular light-border-2 background-light800_dark300 text-dark300_light700 ,min-h-[56px] border"
                 />
               </FormControl>
 

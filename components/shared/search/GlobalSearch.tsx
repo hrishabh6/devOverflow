@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client"
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
@@ -71,7 +72,7 @@ const GlobalSearch = () => {
           type="text"
           placeholder="Search anything globally..."
           value={search}
-          className="no-focus paragraph-regular placeholder text-dark400_light700 background-light800_darkgradient border-none shadow-none outline-none"
+          className="no-focus paragraph-regular placeholder text-dark400_light700 border-none shadow-none outline-none bg-transparent"
           onChange={(e)=> {
             setSearch(e.target.value)
             if(!open){
