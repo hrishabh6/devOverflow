@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import qs from "query-string";
 import { BADGE_CRITERIA } from "@/constants";
-import { BadgeCounts } from "@/types";
+import { BadgeCounts, Job } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -140,3 +140,42 @@ export const assignBadges = (params: BadgeParam) => {
 
   return badgeCounts;
 };
+export function processJobTitle(title: string | undefined | null): string {
+  if (title === undefined || title === null) {
+    return "No Job Title";
+  }
+  // Split the title into words
+  const words = title.split(" ");
+  // Filter out undefined or null and other unwanted words
+  const validWords = words.filter((word) => {
+    return (
+      word !== undefined &&
+      word !== null &&
+      word.toLowerCase() !== "undefined" &&
+      word.toLowerCase() !== "null"
+    );
+  });
+  // If no valid words are left, return the general title
+  if (validWords.length === 0) {
+    return "No Job Title";
+  }
+  // Join the valid words to create the processed title
+  const processedTitle = validWords.join(" ");
+  return processedTitle;
+}
+
+export function formatJobApiResponse(job: any): Job {
+  return {
+    id: job.job_id,
+    employer_name: job.employer_name,
+    employer_logo: job.employer_logo,
+    employer_website: job.employer_website,
+    job_employment_type: job.job_employment_type,
+    job_title: job.job_title,
+    job_description: job.job_description,
+    job_apply_link: job.job_apply_link,
+    job_city: job.job_city,
+    job_state: job.job_state,
+    job_country: job.job_country,
+  };
+}
