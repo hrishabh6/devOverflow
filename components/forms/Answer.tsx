@@ -19,6 +19,7 @@ import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
 import axios from "axios"
+import { gptPrompt } from "@/constants";
 import { toast } from "@/hooks/use-toast";
 interface Props {
   question: string;
@@ -76,7 +77,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
           contents: [
             {
               role: "model",
-              parts: [{ text: "You are a knowledgeable assistant providing concise and helpful answers." }],
+              parts: [{ text: gptPrompt }],
             },
             {
               role: "user",

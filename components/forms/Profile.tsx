@@ -93,7 +93,7 @@ const Profile = ({ clerkId, user }: props) => {
                 />
               </FormControl>
 
-              <FormMessage />
+              <FormMessage /> 
             </FormItem>
           )}
         />
