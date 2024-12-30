@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/next';
 // eslint-disable-next-line camelcase
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
@@ -39,7 +40,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               footerActionLink: "primary-text-gradient hover:text-primary-500",
             },
           }}>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <Analytics />
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
