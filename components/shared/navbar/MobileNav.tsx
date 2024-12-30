@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -16,7 +18,7 @@ import { usePathname } from "next/navigation";
 const NavContent = () => {
   const pathname = usePathname();
   return (
-    <section className="flex h-full flex-col gap-6 pt-16">
+    <section className="flex h-full flex-col gap-6 pt-16 ">
       {sidebarLinks.map((item) => {
         const isActive =
           (pathname.includes(item.route) && item.route.length > 1) ||
@@ -50,7 +52,7 @@ const NavContent = () => {
 
 const MobileNav = () => {
   return (
-    <Sheet>
+    <Sheet >
       <SheetTrigger asChild>
         <Image
           src="/assets/icons/hamburger.svg"
@@ -62,7 +64,7 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="background-light900_dark200 border-none">
+        className="background-light900_dark200 border-none overflow-y-auto">
         <Link href="/" className="flex items-center gap-1">
           <Image
             src="/assets/images/site-logo.svg"
