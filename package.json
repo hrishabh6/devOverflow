@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-env" : "copy .env.example .env && copy .env.example .env.local"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.5",

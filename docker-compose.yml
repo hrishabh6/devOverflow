@@ -10,7 +10,7 @@ services:
       -  /app/node_modules
     env_file:
       - .env.local
-  cliend-prod:
+  client-prod:
     build:
       context: .
       dockerfile: Dockerfile.prod
