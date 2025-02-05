@@ -36,14 +36,53 @@ We need to install or make sure that these tools are pre-installed on your machi
 
 ## ✨ Features
 
-If your project has a lot of features, list them here.
+- Ask questions and answer questions.
+- Upvote, Downvote, and save questions.
+- Include code snippets in your answers.
+- Searching and filtering.
+- View Top Questions and Popular Tags.
+- Built-in recommendation algorithm.
+- Global Search across the database.
+- View all tags and tag-related questions.
+- View and Edit your profile.
+- Built-in badge system for earning badges.
+- View, search jobs or filter by location.
+- Light and Dark Mode.
 
-### 🚀 Install Project
+## 🚀 Install Project
+
+### ⚡ Run with Docker
+
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/hrishabh6/devOverflow.git
+   cd devOverflow
+   ```
+
+2. **Set up environment variables**
+   ```sh
+   npm run generate-env
+   ```
+3. **Run the application**
+    To run on Developement Enviroment
+   ```sh
+   docker-compose up client-dev
+   ```
+    To run on Developement Enviroment
+   ```sh
+   docker-compose up client-prod
+   ```
+
+4. **Access the application at**
+    `http://localhost:3000`
+   
+
+### Manual Installation
 
 1. Clone the Repository
 
 ```bash
-git clone https://github.com/rakibtweets/dev_overflow_nextjs13.git
+git clone https://github.com/hrishabh6/devOverflow.git
 ```
 
 2. Install packages
@@ -55,18 +94,7 @@ npm install
 3. create a `.env` file add necessary credencitals
 
 ```bash
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=
-NEXT_CLERK_WEBHOOK_SECRET=
-NEXT_PUBLIC_TINY_EDITOR_API_KEY=
-MONGODB_URL=
-NEXT_PUBLIC_SERVER_URL=
-OPENAI_API_KEY=
-NEXT_PUBLIC_RAPID_API_KEY=
+npm run generate-env
 ```
 
 4. Run the project using command below
@@ -91,9 +119,9 @@ To fix a bug or enhance an existing module, follow these steps:
 
 ### 📩 Bug / Feature Request
 
-If you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/username/projectname/issues/new) by including your search query and the expected result.
+If you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/hrishabh6/devOverflow/issues/new) by including your search query and the expected result.
 
-If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/username/projectname/issues/new). Please include sample queries and their corresponding results.
+If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/hrishabh6/devOverflow/issues/new). Please include sample queries and their corresponding results.
 
 ## ✅ To-do
 
