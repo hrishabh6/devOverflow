@@ -69,41 +69,33 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   const generateAIAnswer = async () => {
     if (!authorId) return;
     setSetIsSubmittingAI(true);
+
     try {
-      const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
-        method: "post",
-        data: {
-          contents: [
-            {
-              role: "model",
-              parts: [{ text: gptPrompt }],
-            },
-            {
-              role: "user",
-              parts: [{ text: question }],
-            },
-          ],
-          generationConfig: {
-            maxOutputTokens: 1000,
-            temperature: 1,
-          },
-        },
+      const fullPrompt = `${gptPrompt}\n\n${question}`;
+
+      const response = await axios.post("/api/chatgpt", {
+        question: fullPrompt,
       });
-      console.log(response)
-      const aiAnswer = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+
+      const aiAnswer = response.data.reply || "No response generated.";
       const formattedAnswer = aiAnswer.replace(/\n/g, "<br />");
+
       if (editorRef.current) {
         const editor = editorRef.current as any;
         editor.setContent(formattedAnswer);
       }
-    } catch (error) {
-      console.error("Error generating AI answer:", error);
+    } catch (error: any) {
+      console.error("Error generating AI answer:", error.response?.data || error.message);
+      toast({
+        title: "AI Generation Failed",
+        description: "Something went wrong while generating the AI answer. Please try again later.",
+        variant: "destructive",
+      });
     } finally {
       setSetIsSubmittingAI(false);
     }
   };
-  
+
 
   const isDarkMode = useMemo(() => mode === "dark", [mode]);
 
@@ -115,7 +107,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     );
   }
 
-  
+
 
 
   return (

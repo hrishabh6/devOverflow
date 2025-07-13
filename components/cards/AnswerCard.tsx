@@ -31,10 +31,13 @@ const AnswerCard = ({
   createdAt,
 }: Props) => {
   const showActionButtons = clerkId && clerkId === author.clerkId;
+
+
   
   return (
 
     <div className="card-wrapper rounded-[10px] px-11 py-9">
+
       <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
         <div>
           <span className="subtle-regular text-dark400_light700 line-clamp-1 flex sm:hidden">
